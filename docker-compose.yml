@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - LLM_MODEL=llama3.2:latest
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "11434:11434"
+    entrypoint: >
+      /bin/sh -c "
+        ollama serve &
+        sleep 10 &&
+        ollama pull llama3.2:latest &&
+        wait
+      "
+
+volumes:
+  ollama_data: 

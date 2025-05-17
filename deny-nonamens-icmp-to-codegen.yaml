@@ -1,0 +1,14 @@
+apiVersion: crd.projectcalico.org/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-nonamens-icmp-to-codegen
+  namespace: codegen
+spec:
+  selector: all()  # Tüm podlar
+  types:
+  - Ingress
+  ingress:
+  - action: Deny
+    protocol: ICMP
+    source:
+      namespaceSelector: "projectcalico.org/name == 'nonamens'"

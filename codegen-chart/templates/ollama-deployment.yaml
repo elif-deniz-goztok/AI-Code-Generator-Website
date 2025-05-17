@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.ollama.name }}
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    app: {{ .Values.ollama.name }}
+spec:
+  replicas: {{ .Values.ollama.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.ollama.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.ollama.name }}
+    spec:
+      containers:
+      - name: {{ .Values.ollama.name }}
+        image: "{{ .Values.ollama.image.repository }}:{{ .Values.ollama.image.tag }}"
+        imagePullPolicy: {{ .Values.ollama.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.ollama.service.targetPort }}
+        resources:
+          {{- toYaml .Values.ollama.resources | nindent 12 }}
+        volumeMounts:
+        - name: {{ .Values.ollama.name }}-data
+          mountPath: /root/.ollama
+        readinessProbe:
+          httpGet:
+            path: /api/tags
+            port: {{ .Values.ollama.service.targetPort }}
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/tags
+            port: {{ .Values.ollama.service.targetPort }}
+          initialDelaySeconds: 15
+          periodSeconds: 20
+      volumes:
+      - name: {{ .Values.ollama.name }}-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.ollama.name }}-pvc 

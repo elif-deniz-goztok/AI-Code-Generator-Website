@@ -1,0 +1,6 @@
+apiVersion: v2
+name: codegen
+description: A Helm chart for S4E Internship Code Generator project
+type: application
+version: 0.1.0
+appVersion: "1.0.0" 

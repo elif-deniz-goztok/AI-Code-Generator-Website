@@ -1,0 +1,55 @@
+# Default values for codegen chart
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Namespace configuration
+namespace:
+  create: true
+  name: "codegen"
+
+# Code Generator Application
+app:
+  name: code-generator
+  image:
+    repository: code-generator
+    tag: latest
+    pullPolicy: Never
+  replicas: 2
+  service:
+    type: LoadBalancer
+    port: 80
+    targetPort: 8080
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "200m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  env:
+    OLLAMA_BASE_URL: "http://ollama-service:11434"
+    LLM_MODEL: "llama3.2:latest"
+    FLASK_ENV: "production"
+
+# Ollama LLM Service
+ollama:
+  name: ollama
+  image:
+    repository: ollama/ollama
+    tag: latest
+    pullPolicy: IfNotPresent
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 11434
+    targetPort: 11434
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "4Gi"
+      cpu: "1000m"
+  storage:
+    size: 10Gi 
