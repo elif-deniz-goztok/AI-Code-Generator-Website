@@ -1,14 +1,13 @@
 # AI Code Generator
 
 This project is an AI-assisted code generation application that uses Llama to generate Python code based on user prompts.
-It is done as a test of my internship application into S4E.
 
 ## Deneyimim
 
-Bu kısımda, görevin ikinci aşamasını nasıl yaptığım ve yaşadığım sorunlar hakkında bilgi vereceğim.
+Bu kısımda, projenin ikinci aşamasını nasıl yaptığım ve yaşadığım sorunlar hakkında bilgi vereceğim.
 
 ### kubeadm IP Sorunu ve Nasıl Başa Çıktığım: 
-Bu görevde, birçok farklı uygulamayı deneyimleme fırsatım oldu. 
+Bu projede, birçok farklı uygulamayı deneyimleme fırsatım oldu. 
 
 Bir sanal makineyi oluşturma ve içerisine Ubuntu kurma kısmını rahat ve doğru bir şekilde yapana kadar Hyper-V, VirtualBox, Ubuntu Multipass, VMware Workstation, Vagrant gibi birçok yazılımı denedim. 
 
@@ -65,7 +64,7 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
  
 Flannel’in default kurulumu bu Kubernetes NetworkPolicy politikalarını aktif etmediği için, birden fazla node'a sahip olan bu Cluster sistemini detaylıca kontrol edebilecek Calico'yu kullanmaya karar verdim.
 
-Görevi tamamlarken zamanımı alan bir diğer sorun da Calico'nun kurulumunu basitçe yapmayı bulmaktı.
+Zamanımı alan bir diğer sorun da Calico'nun kurulumunu basitçe yapmayı bulmaktı.
 
 Calico'nun websitesinde bulunan (https://docs.tigera.io/calico/latest/getting-started/kubernetes/quickstart) "Calico quickstart guide"ı takip ederek Calico kurmaya karar verdim. Bunun için öncelikle master node'um olan sanal makineme "kind" kurmam, "kind"ı kurabilmek için de "go" kurmam gerekti.
 
